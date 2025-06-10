@@ -1,0 +1,2 @@
+# Ethic-Scorecard
+Internship Project
