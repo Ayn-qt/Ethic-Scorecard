@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Ethics - Login & Signup</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .container {
+      background: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 0 15px rgba(255 255 255 / 0.2);
+    }
+    h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 5px;
+      background: #222;
+      color: #fff;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 5px;
+      background: #00cc66;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #00e673;
+    }
+    .link {
+      margin-top: 1rem;
+      text-align: center;
+      color: #aaa;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: underline;
+    }
+    /* Hide all sections by default except login */
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+
+    /* Main app styles (simplified) */
+    #mainApp {
+      max-width: 900px;
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255 255 255 / 0.1);
+      color: #fff;
+    }
+    #mainApp header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    #mainApp header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid #fff;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border: 2px solid #fff;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #fff;
+      color: #000;
+    }
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 6px;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+    button.submitScenario {
+      background-color: #00cc66;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.submitScenario:hover {
+      background-color: #00e673;
+    }
+    .placeholder {
+      background-color: #222;
+      color: #aaa;
+      border: 1px dashed #555;
+      padding: 1rem;
+      font-style: italic;
+      text-align: center;
+      border-radius: 6px;
+    }
+    section#scores, section#explanations {
+      margin-bottom: 2rem;
+    }
+    section h2 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+    #logoutBtn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ff4444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      float: right;
+    }
+    #logoutBtn:hover {
+      background: #ff2222;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SECTION -->
+  <section id="loginSection" class="active container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="link" onclick="showSignup()">Don't have an account? Sign up</div>
+  </section>
+
+  <!-- SIGNUP SECTION -->
+  <section id="signupSection" class="container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <input type="text" id="signupName" placeholder="Name" required />
+      <input type="email" id="signupEmail" placeholder="Email" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="link" onclick="showLogin()">Already have an account? Login</div>
+  </section>
+
+  <!-- MAIN APP SECTION -->
+  <section id="mainApp" class="container">
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+    <header>
+      <h1>AI Ethics Scoring</h1>
+      <p>Integrating ethical wisdom into AI decision-making</p>
+    </header>
+
+    <nav>
+      <a href="#input">Scenario Input</a>
+      <a href="#scores">Ethics Scores</a>
+      <a href="#explanations">Explanations</a>
+      <a href="#about" onclick="alert('About section can be implemented here!')">About</a>
+    </nav>
+
+    <main>
+      <section id="input">
+        <h2>Scenario Input</h2>
+        <textarea id="scenario" rows="5" placeholder="Describe the ethical dilemma..."></textarea>
+        <button class="submitScenario" onclick="analyzeScenario()">Analyze Scenario</button>
+      </section>
+
+      <section id="scores">
+        <h2>Ethics Scores</h2>
+        <div class="placeholder" id="scoreOutput">Submit a scenario to view ethics scores.</div>
+      </section>
+
+      <section id="explanations">
+        <h2>Explanations</h2>
+        <div class="placeholder" id="explanationOutput">Analysis and ethical insights will appear here.</div>
+      </section>
+    </main>
+  </section>
+
+  <script>
+    // Show signup form and hide others
+    function showSignup() {
+      document.getElementById('loginSection').classList.remove('active');
+      document.getElementById('signupSection').classList.add('active');
+      document.getElementById('mainApp').classList.remove('active');
+    }
+
+    // Show login form and hide others
+    function showLogin() {
+      document.getElementById('loginSection').classList.add('active');
+      document.getElementById('signupSection').classList.remove('active');
+      document.getElementById('mainApp').classList.remove('active');
+    }
+
+    // Show main app and hide login/signup
+    function showMainApp() {
+      document.getElementById('loginSection').classList.remove('active');
+      document.getElementById('signupSection').classList.remove('active');
+      document.getElementById('mainApp').classList.add('active');
+    }
+
+    // Simulate user database (just for demo)
+    const users = [];
+
+    // Signup form submission handler
+    document.getElementById('signupForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+
+      // Simple check if email already exists
+      if(users.some(u => u.email === email)) {
+        alert('Email already registered. Please login.');
+        showLogin();
+        return;
+      }
+
+      // Save user
+      users.push({name, email, password});
+      alert('Signup successful! Please login.');
+      showLogin();
+    });
+
+    // Login form submission handler
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if(user) {
+        alert('Login successful! Welcome, ' + user.name);
+        showMainApp();
+      } else {
+        alert('Invalid email or password.');
+      }
+    });
+
+    // Logout
+    function logout() {
+      if(confirm('Are you sure you want to logout?')) {
+        showLogin();
+      }
+    }
+
+    // Placeholder analyzeScenario function
+    function analyzeScenario() {
+      const scenario = document.getElementById('scenario').value.trim();
+      const scoreOutput = document.getElementById('scoreOutput');
+      const explanationOutput = document.getElementById('explanationOutput');
+
+      if (!scenario) {
+        alert('Please enter an ethical scenario.');
+        return;
+      }
+
+      // Placeholder static scoring (you can connect to API/backend)
+      scoreOutput.innerHTML = `
+        <strong>Hinduism:</strong> 85<br>
+        <strong>Islam:</strong> 78<br>
+        <strong>Christianity:</strong> 82<br>
+        <strong>Buddhism:</strong> 88<br>
+        <strong>Sikhism:</strong> 80
+      `;
+
+      explanationOutput.innerHTML = `
+        <p><strong>Hinduism:</strong> The scenario respects Dharma and personal responsibility.</p>
+        <p><strong>Islam:</strong> Ethical consideration aligns with justice and compassion values.</p>
+        <p><strong>Christianity:</strong> Promotes love and sacrifice, though ambiguous in means.</p>
+        <p><strong>Buddhism:</strong> Encourages mindfulness and alleviation of suffering.</p>
+        <p><strong>Sikhism:</strong> Advocates for equality and selfless service.</p>
+      `;
+    }
+  </script>
+</body>
+</html>
